@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=45",  "cffi>=1.15.0", "wheel", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dynamic = ["version"]
+name = "LJM-cffi-bindings"
+description = "Low level bindings to LabJackM library"
+dependencies = ["cffi>=1.5.1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]
+# Dev versions are PREVIOUS.devN with N being the # of commits since PREVIOUS.
+version_file = "src/_LJM_cffi_bindings/_version.py"
