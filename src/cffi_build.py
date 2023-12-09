@@ -4,14 +4,49 @@ ffibuilder = FFI()
 
 ffibuilder.set_source(
     "_ljm",
-    """
-#include <LabJackM.h>   // the C header of the library
-""",
+    "#include <LabJackM.h>",
     libraries=["LabJackM"],
 )
 
 ffibuilder.cdef(
     """
+// Device types:
+enum {
+        LJM_dtANY = ...,
+        LJM_dtT4 = ...,
+        LJM_dtT7 = ...,
+        LJM_dtT8 = ...,
+        LJM_dtDIGIT = ...,
+        LJM_dtTSERIES = ...
+};
+
+// Connection types:
+enum {
+        LJM_ctANY = ...,
+        LJM_ctANY_TCP = ...,
+
+        LJM_ctUSB = ...,
+
+        // TCP
+        LJM_ctTCP = ...,
+        LJM_ctNETWORK_TCP = ...,
+        LJM_ctETHERNET = ...,
+        LJM_ctETHERNET_TCP = ...,
+        LJM_ctWIFI = ...,
+        LJM_ctWIFI_TCP = ...,
+
+        // UDP
+        LJM_ctANY_UDP = ...,
+        LJM_ctNETWORK_UDP = ...,
+        LJM_ctETHERNET_UDP = ...,
+        LJM_ctWIFI_UDP = ...,
+
+        // TCP or UDP
+        LJM_ctNETWORK_ANY = ...,
+        LJM_ctETHERNET_ANY = ...,
+        LJM_ctWIFI_ANY = ...
+};
+
 // constants from header file
 static const double LJM_VERSION;
 
@@ -27,28 +62,6 @@ static const int LJM_FLOAT32; // C type of float
 static const int LJM_BYTE;    // byte array, zero padded to even length
                               // but no null terminator guaranteed
 static const int LJM_STRING;  // same as LJM_BYTE but always null terminated
-
-
-//connection type
-static const int LJM_ctANY;
-static const int LJM_ctANY_TCP;
-
-static const int LJM_ctUSB;
-
-static const int LJM_ctTCP;
-static const int LJM_ctNETWORK_TCP;
-static const int LJM_ctETHERNET;
-static const int LJM_ctETHERNET_TCP;
-static const int LJM_ctWIFI;
-static const int LJM_ctWIFI_TCP;
-
-static const int LJM_ctNETWORK_UDP;
-static const int LJM_ctETHERNET_UDP;
-static const int LJM_ctWIFI_UDP;
-
-static const int LJM_ctNETWORK_ANY;
-static const int LJM_ctETHERNET_ANY;
-static const int LJM_ctWIFI_ANY;
 
 // call back function
 extern "Python" void StreamReadCallback(void *);
