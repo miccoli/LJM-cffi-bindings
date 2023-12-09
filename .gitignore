@@ -4,3 +4,4 @@ dist
 _version.py
 __pycache__/
 *.so
+_ljm.[c,o]
